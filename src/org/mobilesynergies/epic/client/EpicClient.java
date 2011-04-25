@@ -414,8 +414,8 @@ public class EpicClient {
 	}
 
 	/**
-	 * Performs checks if there is connectivity to the server, the client could be registered, and the EPIC network information is available.
-	 * @return Returns true if EPIC network information could be retrieved. 
+	 * Performs checks if there is connectivity to the server, the client could be authenticated
+	 * @return Returns true if connected to EPIC network 
 	 */
 	public boolean isConnectedToEpicNetwork() {
 		if(!isConnected()){
@@ -424,7 +424,7 @@ public class EpicClient {
 		if(!mConnection.isAuthenticated()){
 			return false;
 		}
-		return mRoster != null;			
+		return true;			
 	}
 
 
