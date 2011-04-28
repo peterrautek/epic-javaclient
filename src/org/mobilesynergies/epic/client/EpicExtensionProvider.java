@@ -31,6 +31,14 @@ public class EpicExtensionProvider implements PacketExtensionProvider{
 		String session = parser.getAttributeValue(null, "session");
 		String spackage = parser.getAttributeValue(null, "package");
 		String sclass = parser.getAttributeValue(null, "class");
+		//proceed to the next start tag (the data) or end tag ('application' tag closes without data).
+		parser.next();
+		int event = parser.getEventType();
+		while((event != XmlPullParser.START_TAG) && (event != XmlPullParser.END_TAG)){
+			//proceed to the next tag
+			event = parser.next();
+		}
+		
 		ParameterMap map = (ParameterMap) ParameterManager.getInstance().parseXml(parser);
 		EpicPacketExtension messageEvent = new EpicPacketExtension(action, session, spackage, sclass, map);
 		return messageEvent;

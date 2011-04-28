@@ -19,6 +19,7 @@ import org.jivesoftware.smack.packet.DefaultPacketExtension;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.packet.StreamError;
 import org.jivesoftware.smack.provider.PrivacyProvider;
 import org.jivesoftware.smack.provider.ProviderManager;
 import org.jivesoftware.smackx.Form;
@@ -147,7 +148,14 @@ public class EpicClient {
 			if(mEpicNetworkConnectivityCallback!=null){
 				mEpicNetworkConnectivityCallback.onConnectivityChanged(false);
 			}
-			Log.d(CLASS_TAG, "connectionClosedOnError: "+e.getMessage());				
+			
+			Log.d(CLASS_TAG, "connectionClosedOnError: "+e.getMessage());
+			XMPPException x = new XMPPException(e);
+			StreamError streamerror = x.getStreamError();
+			if(streamerror != null){
+				Log.d(CLASS_TAG, "StreamError: "+streamerror.toString());
+				
+			}
 		}
 
 		public void reconnectingIn(int seconds) {
@@ -235,12 +243,15 @@ public class EpicClient {
 	 * @throws EpicClientException An exception is thrown if the connection could not be established. This might be due to unavailable internet connectivity, a server problem, etc.
 	 */
 	public boolean establishConnection(String server, int port, String service) throws EpicClientException{
-		SASLAuthentication.supportSASLMechanism("PLAIN", 0);
-		ProviderManager pm = ProviderManager.getInstance();
-		//init the provider manager (adding extensions that are implemented in smack)
-		configure(pm);
-		ConnectionConfiguration connConfig = new ConnectionConfiguration(server, port, service);
-		mConnection = new XMPPConnection( connConfig );
+		if(mConnection == null){
+			SASLAuthentication.supportSASLMechanism("PLAIN", 0);
+			ProviderManager pm = ProviderManager.getInstance();
+			//init the provider manager (adding extensions that are implemented in smack)
+			configure(pm);
+			ConnectionConfiguration connConfig = new ConnectionConfiguration(server, port, service);
+			connConfig.setReconnectionAllowed(false);
+			mConnection = new XMPPConnection( connConfig );
+		}
 
 		// Obtain the ServiceDiscoveryManager associated with my XMPPConnection
 		// This actually yields a null pointer! (strange behavior of smack!?). 

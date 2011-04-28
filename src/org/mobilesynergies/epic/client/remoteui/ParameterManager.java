@@ -18,9 +18,9 @@ public class ParameterManager {
 	
 	Map<String, ParameterCreator> mMap = new HashMap<String, ParameterCreator>(); 
 
-	// Verhindere die Erzeugung des Objektes �ber andere Methoden
+	// make it impossible to create a new instance via other methods
 	private ParameterManager () {}
-	// Eine nicht synchronisierte Zugriffsmethode auf Klassenebene.
+	
 	public static ParameterManager getInstance () {
 		return InstanceHolder.INSTANCE;
 	}
@@ -35,11 +35,15 @@ public class ParameterManager {
 	
 	public Parameter parseXml(XmlPullParser parser) throws XmlPullParserException, IOException{
 		int event = parser.getEventType();
-		//proceed to the next start tag
-		while(event != XmlPullParser.START_TAG){
-			event = parser.nextTag();
+		//proceed to the next start or end tag
+		while((event != XmlPullParser.START_TAG)&&(event != XmlPullParser.END_TAG)){
+			event = parser.next();
 		}
 		
+		if(event==XmlPullParser.END_TAG){
+			return null; 
+		}
+			
 		//read out the type			
 		String type = parser.getAttributeValue(null, "type");
 		
