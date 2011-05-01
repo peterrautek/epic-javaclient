@@ -139,14 +139,14 @@ public class EpicClient {
 
 		public void connectionClosed() {
 			if(mEpicNetworkConnectivityCallback!=null){
-				mEpicNetworkConnectivityCallback.onConnectivityChanged(false);
+				mEpicNetworkConnectivityCallback.onConnectionClosed();
 			}
 			Log.d(CLASS_TAG, "connectionClosed");
 		}
 
 		public void connectionClosedOnError(Exception e) {
 			if(mEpicNetworkConnectivityCallback!=null){
-				mEpicNetworkConnectivityCallback.onConnectivityChanged(false);
+				mEpicNetworkConnectivityCallback.onConnectionClosedOnError();
 			}
 			
 			Log.d(CLASS_TAG, "connectionClosedOnError: "+e.getMessage());
@@ -159,23 +159,23 @@ public class EpicClient {
 		}
 
 		public void reconnectingIn(int seconds) {
-			if(mEpicNetworkConnectivityCallback!=null){
+			/*if(mEpicNetworkConnectivityCallback!=null){
 				mEpicNetworkConnectivityCallback.onConnectivityChanged(false);
-			}
+			}*/
 			Log.d(CLASS_TAG, "reconnectingIn "+seconds+ "seconds");				
 		}
 
 		public void reconnectionFailed(Exception e) {
 			if(mEpicNetworkConnectivityCallback!=null){
-				mEpicNetworkConnectivityCallback.onConnectivityChanged(false);
+				mEpicNetworkConnectivityCallback.onConnectionClosedOnError();
 			}
 			Log.d(CLASS_TAG, "reconnectionFailed: "+e.getMessage());				
 		}
 
 		public void reconnectionSuccessful() {
-			if(mEpicNetworkConnectivityCallback!=null){
+			/*if(mEpicNetworkConnectivityCallback!=null){
 				mEpicNetworkConnectivityCallback.onConnectivityChanged(true);
-			}
+			}*/
 			Log.d(CLASS_TAG, "reconnectionSuccessful");				
 		}
 
