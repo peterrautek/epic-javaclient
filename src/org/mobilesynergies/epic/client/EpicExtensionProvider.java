@@ -39,8 +39,9 @@ public class EpicExtensionProvider implements PacketExtensionProvider{
 			event = parser.next();
 		}
 		
-		ParameterMap map = (ParameterMap) ParameterManager.getInstance().parseXml(parser);
-		EpicPacketExtension messageEvent = new EpicPacketExtension(action, session, spackage, sclass, map);
+		Parameter parameter = (Parameter) ParameterManager.getInstance().parseXml(parser);
+		
+		EpicPacketExtension messageEvent = new EpicPacketExtension(action, session, spackage, sclass, parameter);
 		return messageEvent;
 	}
 

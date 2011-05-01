@@ -19,7 +19,7 @@ public class EpicPacketExtension implements PacketExtension{
 	public static final String ELEMENTNAME = "application";
     public static final String NAMESPACE = "http://mobilesynergies.org/protocol/epic";
     
-    private ParameterMap mData;
+    private Parameter mData;
     private String mAction;
     private String mPackage;
     private String mClass;
@@ -27,11 +27,11 @@ public class EpicPacketExtension implements PacketExtension{
     
   
     public EpicPacketExtension(String action, String session, String spackage, String sclass,
-			ParameterMap map) {
+			Parameter data) {
 		mAction = action; 
 		mPackage = spackage;
 		mClass = sclass;
-		mData = map;
+		mData = data;
 		mSession = session;
 	}
     
@@ -40,9 +40,9 @@ public class EpicPacketExtension implements PacketExtension{
     	return mSession;
     }
 
-	public Parameter getValue(String key){
+	/*public Parameter getValue(String key){
     	return mData.get(key);
-    }
+    }*/
 
      /**
      * Returns the XML element name of the extension sub-packet root element.
@@ -81,13 +81,16 @@ public class EpicPacketExtension implements PacketExtension{
         	buf.append(" package=\"").append(mPackage).append("\"");
         	buf.append(" class=\"").append(mClass).append("\"");
         }
+        
         buf.append(" >");
-        buf.append(mData.contentAsXml());
+        if(mData!=null){
+        	buf.append(mData.asXml("data"));
+        }
         buf.append("</").append(ELEMENTNAME).append(">");
         return buf.toString();
     }
 
-	public ParameterMap getParameters() {
+	public Parameter getParameters() {
 		
 		return mData;
 	}

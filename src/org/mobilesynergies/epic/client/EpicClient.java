@@ -22,6 +22,7 @@ import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.packet.StreamError;
 import org.jivesoftware.smack.provider.PrivacyProvider;
 import org.jivesoftware.smack.provider.ProviderManager;
+import org.jivesoftware.smack.util.StringUtils;
 import org.jivesoftware.smackx.Form;
 import org.jivesoftware.smackx.GroupChatInvitation;
 import org.jivesoftware.smackx.PrivateDataManager;
@@ -58,6 +59,7 @@ import org.mobilesynergies.epic.client.remoteui.EpicCommandInfo;
 import org.mobilesynergies.epic.client.remoteui.FloatParameter;
 import org.mobilesynergies.epic.client.remoteui.IntParameter;
 import org.mobilesynergies.epic.client.remoteui.OptionParameter;
+import org.mobilesynergies.epic.client.remoteui.Parameter;
 import org.mobilesynergies.epic.client.remoteui.ParameterManager;
 import org.mobilesynergies.epic.client.remoteui.ParameterMap;
 import org.mobilesynergies.epic.client.remoteui.StringParameter;
@@ -337,12 +339,24 @@ public class EpicClient {
 		}
 		
 		registerEpicMessageListener();
-		
+		//TODO remove
+		//debugService();
 		return bAuthenticated;		
 	}
 
 	
+	
 		
+	private void debugService() {
+		String action = "org.epic.action.ListActions";
+		ParameterMap pm = new ParameterMap();
+		pm.putInt("size", 5);
+		String sessionid = "asdfasdfasdf";
+		mEpicMessageCallback.handleMessage("kermit@box/browser", action, sessionid, null, null, pm);
+	}
+
+
+
 	private void registerEpicMessageListener(){
 		PacketListener pl = new PacketListener(){
 			@Override
@@ -352,6 +366,31 @@ public class EpicClient {
 					return;
 				}
 				String from = packet.getFrom();
+				String to = packet.getTo();
+				
+				//check if epic user is identical
+				if( from != null){
+					String fromBareJid = StringUtils.parseBareAddress(from);
+					String deviceBareJid = StringUtils.parseBareAddress(mConnection.getUser());
+					if( ! fromBareJid.equalsIgnoreCase(deviceBareJid)){
+						// ignore message if not identical user
+						return;
+					}
+				} else {
+					//ignore message
+					return;
+				}
+				
+				//check if the message was intended for this resource
+				if(to!=null){
+					String toRessource = StringUtils.parseResource(to);
+					String deviceResource = StringUtils.parseResource(mConnection.getUser());
+					if( ! toRessource.equalsIgnoreCase(deviceResource)){
+						// ignore message if not intended for this resource
+						return;
+					}
+				}
+				
 				EpicPacketExtension pe = (EpicPacketExtension)packet.getExtension("http://mobilesynergies.org/protocol/epic");
 				if(pe!=null){
 					String action = pe.getAction();
@@ -359,7 +398,7 @@ public class EpicClient {
 						Log.d(CLASS_TAG, "Ignoring epic message without 'action' element."); 
 					} else {
 						action = action.trim();
-						ParameterMap pm = pe.getParameters();
+						Parameter data = pe.getParameters();
 						
 						if(action.length()>0) {
 							String sessionid = pe.getSessionId();
@@ -375,7 +414,7 @@ public class EpicClient {
 							{
 								className = className.trim();
 							}
-							mEpicMessageCallback.handleMessage(from, action, sessionid, packageName, className, pm);
+							mEpicMessageCallback.handleMessage(from, action, sessionid, packageName, className, data);
 						}
 					}
 					
