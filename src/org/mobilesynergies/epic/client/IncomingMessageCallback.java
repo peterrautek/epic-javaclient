@@ -17,6 +17,6 @@ public interface IncomingMessageCallback {
      * This implementation is used to receive message callbacks from the Epic service.
 	 * @param  
      */
-    public abstract boolean handleMessage(String from, String action, String sessionid, String packageName, String className, Parameter data);
+    public abstract boolean handleMessage(String from, String action, String sessionid, String packageName, String className, ParameterMap data);
 
 }

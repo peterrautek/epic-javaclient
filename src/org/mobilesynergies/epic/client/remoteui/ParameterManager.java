@@ -55,6 +55,7 @@ public class ParameterManager {
 
 		//create the parameter from xml
 		Parameter p = pc.fromXml(parser);
+		
 		return p;
 	}
 

@@ -17,6 +17,7 @@ public class EpicExtensionProvider implements PacketExtensionProvider{
 	public EpicExtensionProvider() {
 	}
 
+	
 	/**
 	 * Parses a MessageEvent packet (extension sub-packet).
 	 *
@@ -39,9 +40,15 @@ public class EpicExtensionProvider implements PacketExtensionProvider{
 			event = parser.next();
 		}
 		
-		Parameter parameter = (Parameter) ParameterManager.getInstance().parseXml(parser);
-		
-		EpicPacketExtension messageEvent = new EpicPacketExtension(action, session, spackage, sclass, parameter);
+		Parameter data = (Parameter) ParameterManager.getInstance().parseXml(parser);
+		EpicPacketExtension messageEvent = null;
+		if( (data==null) || (data.getType()==null) || (!data.getType().equalsIgnoreCase(Parameter.TYPENAME_MAP)) ){
+			//don't attach the data
+			messageEvent = new EpicPacketExtension(action, session, spackage, sclass, null);
+		} else {
+			//attach the data
+			messageEvent = new EpicPacketExtension(action, session, spackage, sclass, (ParameterMap)data);
+		}
 		return messageEvent;
 	}
 

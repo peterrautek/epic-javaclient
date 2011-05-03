@@ -398,7 +398,7 @@ public class EpicClient {
 						Log.d(CLASS_TAG, "Ignoring epic message without 'action' element."); 
 					} else {
 						action = action.trim();
-						Parameter data = pe.getParameters();
+						ParameterMap data = pe.getParameterMap();
 						
 						if(action.length()>0) {
 							String sessionid = pe.getSessionId();
