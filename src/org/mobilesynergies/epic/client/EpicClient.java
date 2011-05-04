@@ -15,7 +15,6 @@ import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.filter.PacketFilter;
-import org.jivesoftware.smack.packet.DefaultPacketExtension;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
@@ -59,22 +58,23 @@ import org.mobilesynergies.epic.client.remoteui.EpicCommandInfo;
 import org.mobilesynergies.epic.client.remoteui.FloatParameter;
 import org.mobilesynergies.epic.client.remoteui.IntParameter;
 import org.mobilesynergies.epic.client.remoteui.OptionParameter;
-import org.mobilesynergies.epic.client.remoteui.Parameter;
 import org.mobilesynergies.epic.client.remoteui.ParameterManager;
 import org.mobilesynergies.epic.client.remoteui.ParameterMap;
 import org.mobilesynergies.epic.client.remoteui.StringParameter;
 
 /**
  * 
- * The EpicClient encapsulates all xmpp usages and is platform independent (should run on windows, linux, and android).
+ * The EpicClient encapsulates all xmpp usages and is platform independent (runs at least on windows, linux, and android).
  * It provides methods for establishing a server connection, registration, authentication, epic network exploration, announcing and executing remote commands, etc. 
  * 
  * @author Peter
  *
  */
-
 public class EpicClient {
 
+	/**
+	 * a string identifying this class
+	 */
 	protected static final String CLASS_TAG = EpicClient.class.getSimpleName();
 
 	/**
@@ -86,21 +86,6 @@ public class EpicClient {
 	 * The XMPP connection that does all the communication with the XMPP server
 	 */
 	private XMPPConnection mConnection;
-
-	/**
-	 * A username to register at the server 
-	 
-	private String mUsername;*/
-
-	/**
-	 * The password that corresponds to the username
-	 
-	private String mPassword;*/
-
-	/**
-	 * The name of the server
-	 
-	private String mServer;*/
 
 	/**
 	 * The service discovery manager 
@@ -345,18 +330,6 @@ public class EpicClient {
 	}
 
 	
-	
-		
-	private void debugService() {
-		String action = "org.epic.action.ListActions";
-		ParameterMap pm = new ParameterMap();
-		pm.putInt("size", 5);
-		String sessionid = "asdfasdfasdf";
-		mEpicMessageCallback.handleMessage("kermit@box/browser", action, sessionid, null, null, pm);
-	}
-
-
-
 	private void registerEpicMessageListener(){
 		PacketListener pl = new PacketListener(){
 			@Override
