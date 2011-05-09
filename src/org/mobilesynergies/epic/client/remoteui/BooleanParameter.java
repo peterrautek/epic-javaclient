@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.jivesoftware.smackx.FormField;
+import org.mobilesynergies.epic.client.Log;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -94,13 +95,25 @@ public class BooleanParameter extends Parameter {
 		return getType();
 	}
 
+	/**
+	 * Parses a boolean parameter from the next text of the parser.
+	 * @param parser The XmlPullParser at the position of the parameter.
+	 * @return Returns a parameter of type BoolesnParameter with the value of the next text. 
+	 * The value is true if (and only if) the string equals 'true' (not case sensitive).  
+	 */
 	@Override
 	public Parameter fromXml(XmlPullParser parser)
 			throws XmlPullParserException, IOException {
 		String boolString = parser.nextText();
-		Parameter p = new BooleanParameter(Boolean.parseBoolean(boolString));
+		boolean b = false;
+		b = Boolean.parseBoolean(boolString);
+		Parameter p = new BooleanParameter(b);
 		return p;
 	}
+	
+	
+
+
 	
 	
 

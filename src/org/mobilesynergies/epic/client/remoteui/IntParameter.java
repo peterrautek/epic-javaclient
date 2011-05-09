@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.jivesoftware.smackx.FormField;
 import org.jivesoftware.smackx.FormField.Option;
+import org.mobilesynergies.epic.client.Log;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -188,11 +189,24 @@ public class IntParameter extends Parameter {
 		return getType();
 	}
 
+	/**
+	 * 
+	 * Parses an integer parameter from the next text of the parser.
+	 * @param parser The XmlPullParser at the position of the parameter.
+	 * @return Returns a parameter of type IntParameter with the value of the next text. 
+	 * If the string cannot be parsed to a int, the IntParameter will have value 0.  
+	 */
 	@Override
 	public Parameter fromXml(XmlPullParser parser)
 			throws XmlPullParserException, IOException {
 		String integer = parser.nextText();
-		Parameter p = new IntParameter(Integer.parseInt(integer));
+		int i = 0;
+		try{
+			i = Integer.parseInt(integer);
+		}catch (NumberFormatException e){
+			Log.w(Parameter.LOG_TAG, "Exception parsing value for parameter of type integer.");
+		}
+		Parameter p = new IntParameter(i);
 		return p;
 	}
 

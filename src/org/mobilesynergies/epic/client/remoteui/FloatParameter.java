@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.jivesoftware.smackx.FormField;
+import org.mobilesynergies.epic.client.Log;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -173,11 +174,24 @@ public class FloatParameter extends Parameter {
 		return getType();
 	}
 
+	
+	/**
+	 * Parses a float parameter from the next text of the parser.
+	 * @param parser The XmlPullParser at the position of the parameter.
+	 * @return Returns a parameter of type FloatParameter with the value of the next text. 
+	 * If the string cannot be parsed to a float, the FloatParameter will have value 0.  
+	 */
 	@Override
 	public Parameter fromXml(XmlPullParser parser)
 			throws XmlPullParserException, IOException {
 		String floatparam = parser.nextText(); 
-		Parameter p = new FloatParameter(Float.parseFloat(floatparam));
+		float f = 0.f;
+		try{
+			f = Float.parseFloat(floatparam);
+		} catch (NumberFormatException e) {
+			Log.w(Parameter.LOG_TAG, "Exception parsing value for parameter of type float.");
+		}
+		Parameter p = new FloatParameter(f);
 		return p;
 	}
 
@@ -187,3 +201,5 @@ public class FloatParameter extends Parameter {
 	
 
 }
+
+	

@@ -36,6 +36,7 @@ public abstract class Parameter implements ParameterCreator{
 	public static final String TYPENAME_ARRAY = "array";
 	public static final String TYPENAME_MAP = "map";
 	public static final String TYPENAME_UNKNOWN = "unknown";
+	public static final String LOG_TAG = "Parameter";
 	
 	
 		
