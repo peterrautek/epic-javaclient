@@ -25,7 +25,6 @@ package org.mobilesynergies.epic.client.remoteui;
 
 
 import java.io.IOException;
-import java.io.ObjectOutputStream.PutField;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -136,7 +135,7 @@ public class ParameterMap extends Parameter{
 				FormField field = iterParameters.next();
 				String variable = field.getVariable();
 				String label = field.getLabel();
-				String type = field.getType();
+				//String type = field.getType();
 				String description = field.getDescription();
 				Iterator<Option> options = field.getOptions();
 				Iterator<String> values = field.getValues();

@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.jivesoftware.smackx.FormField;
-import org.mobilesynergies.epic.client.Log;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 

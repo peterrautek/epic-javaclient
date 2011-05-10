@@ -1,14 +1,10 @@
 package org.mobilesynergies.epic.client.remoteui;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.jivesoftware.smackx.FormField;
-import org.jivesoftware.smackx.FormField.Option;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 

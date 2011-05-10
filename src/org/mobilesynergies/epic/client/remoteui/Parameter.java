@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import org.jivesoftware.smackx.FormField;
-import org.xmlpull.v1.XmlPullParser;
 
 /**
  *

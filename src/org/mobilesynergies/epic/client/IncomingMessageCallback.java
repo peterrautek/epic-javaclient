@@ -1,6 +1,5 @@
 package org.mobilesynergies.epic.client;
 
-import org.mobilesynergies.epic.client.remoteui.Parameter;
 import org.mobilesynergies.epic.client.remoteui.ParameterMap;
 
 

@@ -1,9 +1,6 @@
 package org.mobilesynergies.epic.client;
 
-import java.util.*;
-
 import org.jivesoftware.smack.packet.PacketExtension;
-import org.mobilesynergies.epic.client.remoteui.Parameter;
 import org.mobilesynergies.epic.client.remoteui.ParameterMap;
 
 

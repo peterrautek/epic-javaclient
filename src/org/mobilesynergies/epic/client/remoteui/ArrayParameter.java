@@ -50,7 +50,7 @@ public class ArrayParameter extends Parameter {
 	}
 	
 	public void addEntry(Parameter entry) throws SpecializationException{
-		String type = entry.getType();
+		//String type = entry.getType();
 		mArray.add(entry);
 	}
 	
